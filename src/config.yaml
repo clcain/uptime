@@ -1,0 +1,7 @@
+endpoints:
+  - name: 'Example'
+    log_file: './results/example'
+    type: http
+    url: 'http://example.com'
+    http_success_code: 200
+    refresh: 5
