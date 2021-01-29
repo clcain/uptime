@@ -1,6 +1,6 @@
 endpoints:
   - name: 'Example'
-    log_file: './results/example'
+    log_file: './log/example'
     type: http
     url: 'http://example.com'
     http_success_code: 200

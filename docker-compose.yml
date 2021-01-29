@@ -6,4 +6,5 @@ services:
     restart: always
     volumes:
       - ./config.yaml:/app/config.yaml
-      - ./results:/app/results
+      - ./log:/app/log
+      - /etc/localtime:/etc/localtime:ro

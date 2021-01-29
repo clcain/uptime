@@ -1,16 +1,18 @@
 import datetime
+import ping3
 import requests
 
 
 class Endpoint:
 
     def __init__(self, dict):
-        self.name = dict['name']
-        self.log_file = dict['log_file']
-        self.type = dict['type']
-        self.url = dict['url']
-        self.http_success_code = dict['http_success_code']
-        self.refresh = dict['refresh']
+        self.name = dict.get('name')
+        self.log_file = dict.get('log_file')
+        self.type = dict.get('type')
+        self.address = dict.get('address')
+        self.url = dict.get('url')
+        self.http_success_code = dict.get('http_success_code')
+        self.refresh = dict.get('refresh')
         self.tick = 0
 
     def __str__(self):
@@ -29,9 +31,15 @@ class Endpoint:
             r = requests.get(self.url)
             end_time = datetime.datetime.now().timestamp()
             latency = end_time - start_time
-            print(r.status_code)
+            print(f'Status code: {r.status_code}')
             result = r.status_code == self.http_success_code
             self.report_result(result, latency)
+
+        elif self.type == 'ping':
+            print(f'Checking endpoint: {self.name}')
+            latency = ping3.ping(self.address)
+            print(f'Ping time: {latency} ms')
+            self.report_result(1, latency)
 
     def report_result(self, result, latency):
         with open(self.log_file, 'a') as f:
